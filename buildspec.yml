@@ -1,21 +1,30 @@
 version: 0.2
 
 phases:
+
+  install:
+    runtime-versions:
+      java: corretto17
+
   pre_build:
     commands:
-      - echo Nothing to do in the pre_build phase...
-            
+      - echo Build Started
+      - java -version
+      - mvn -version
+
   build:
     commands:
-      - echo Build started on `date`
-      - mvn clean install
-                 
+      - mvn clean package
+
   post_build:
     commands:
-#      - echo Build completed on `date`
-     
+      - echo Build Completed
+
 artifacts:
   files:
-     - 'target/springbootrestapi-0.0.1-SNAPSHOT.jar'
-#    - 'target/*.war'
-  discard-paths: yes
+    - target/*.jar
+    - Procfile
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
